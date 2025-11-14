@@ -10,9 +10,9 @@ class ThemeButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      '/assets/images/theme_button.png',
-      width: width,
-      height: height,
+      'lib/assets/images/theme_button.png',
+      width: width ?? 20.0,
+      height: height ?? 20.0,
       fit: BoxFit.contain,
     );
   }

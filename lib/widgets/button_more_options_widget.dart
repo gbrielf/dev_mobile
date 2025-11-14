@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // cria uma classe que herda de StatelessWidget
-class ButtonMoreOptions extends StatelessWidget {
-  const ButtonMoreOptions({super.key});
+class ButtonMoreOptionsWidget extends StatelessWidget {
+  const ButtonMoreOptionsWidget({super.key});
 
 // retorna um widget que descreve a UI
   @override

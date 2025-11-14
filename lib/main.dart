@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'widgets/snack_card.dart';
+import 'package:flutter_project_nutrition/screens/diet_screen.dart';
+import 'package:flutter_project_nutrition/widgets/header_widget.dart';
+import 'package:flutter_project_nutrition/widgets/logo_widget.dart';
+import 'package:flutter_project_nutrition/widgets/theme_button_widget.dart';
+import 'widgets/snack_card_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +19,29 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          scaffoldBackgroundColor: const Color(
+            0xFF2D2D2D,
+          ), // cor de fundo global
+          textTheme: const TextTheme(
+              bodyLarge: TextStyle(
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w700, // SemiBold
+                fontSize: 16,
+                color: Colors.white,
+              ),
+              bodyMedium: TextStyle(
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500, // Medium
+                fontSize: 16,
+                color: Colors.white,
+              ),
+              bodySmall: TextStyle(
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w300, // Light
+                fontSize: 16,
+                color: Colors.white,
+              ),
+          )
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -62,12 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-      ),
+      backgroundColor: Color(0xFF2D2D2D),
       body: Center(
-        child: const SnackCard(),
-      ),
+        child: const DietScreen()),
     );
   }
 }
