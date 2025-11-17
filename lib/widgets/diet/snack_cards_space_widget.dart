@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_nutrition/widgets/snack_card_widget.dart';
+import 'snack_card_widget.dart';
 
 class SnackCardsSpaceWidget extends StatelessWidget {
   const SnackCardsSpaceWidget({super.key});
@@ -31,7 +31,7 @@ class SnackCardsSpaceWidget extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(bottom: 16.0),
           child: SnackCardWidget(title: 'Ceia', time: '22:00'),
-        ),       
+        ),
       ],
     );
   }

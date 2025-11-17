@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../widgets/common/main_title_widget.dart';
 import '../widgets/common/header_widget.dart';
-import '../widgets/diet/snack_cards_space_widget.dart';
+import '../widgets/training/training_main_title_widget.dart';
+import '../widgets/training/training_cards_space_widget.dart';
 
-class DietScreen extends StatelessWidget {
-  const DietScreen({super.key});
+class TrainingScreen extends StatelessWidget {
+  const TrainingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,10 @@ class DietScreen extends StatelessWidget {
               HeaderWidget(),
               const SizedBox(height: 15),
 
-              MainTitleWidget(),
+              TrainingMainTitleWidget(),
               const SizedBox(height: 30),
 
-              Expanded(child: SnackCardsSpaceWidget()),
+              Expanded(child: TrainingCardsSpaceWidget()),
             ],
           ),
         ),

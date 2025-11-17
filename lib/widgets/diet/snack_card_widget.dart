@@ -24,7 +24,7 @@ class SnackCardWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Café da Manhã',
+            title,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -32,7 +32,7 @@ class SnackCardWidget extends StatelessWidget {
             ),
           ),
           Text(
-            '7:00',
+            time,
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,

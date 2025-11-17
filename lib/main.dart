@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_nutrition/screens/diet_screen.dart';
-import 'package:flutter_project_nutrition/widgets/common/header_widget.dart';
-import 'package:flutter_project_nutrition/widgets/common/logo_widget.dart';
-import 'package:flutter_project_nutrition/widgets/common/theme_button_widget.dart';
-import 'widgets/snack_card_widget.dart';
+import 'package:flutter_project_nutrition/widgets/training/exercise_card_widget.dart';
+import 'package:flutter_project_nutrition/widgets/training/training_cards_space_widget.dart';
+import 'package:flutter_project_nutrition/widgets/training/training_main_title_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,29 +18,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          scaffoldBackgroundColor: const Color(
-            0xFF2D2D2D,
-          ), // cor de fundo global
-          textTheme: const TextTheme(
-              bodyLarge: TextStyle(
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w700, // SemiBold
-                fontSize: 16,
-                color: Colors.white,
-              ),
-              bodyMedium: TextStyle(
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w500, // Medium
-                fontSize: 16,
-                color: Colors.white,
-              ),
-              bodySmall: TextStyle(
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w300, // Light
-                fontSize: 16,
-                color: Colors.white,
-              ),
-          )
+        scaffoldBackgroundColor: const Color(
+          0xFF2D2D2D,
+        ), // Cor global do background
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -88,10 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      backgroundColor: Color(0xFF2D2D2D),
-      body: Center(
-        child: const DietScreen()),
-    );
+    return Scaffold(body: Center(child: DietScreen()));
   }
 }
