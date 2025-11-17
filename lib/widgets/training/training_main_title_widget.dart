@@ -10,12 +10,13 @@ class TrainingMainTitleWidget extends StatelessWidget {
     // A Column principal
     return Column(
       // Alinha todo o conteúdo (a Row e o Subtítulo) à esquerda
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // 1. UMA NOVA ROW para o Título e o Ícone
         Row(
           // Alinha o texto e o ícone no centro (verticalmente)
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
               'Peito e Tríceps',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_nutrition/screens/diet_screen.dart';
+import 'package:flutter_project_nutrition/screens/training_screen.dart';
 import 'package:flutter_project_nutrition/widgets/training/exercise_card_widget.dart';
 import 'package:flutter_project_nutrition/widgets/training/training_cards_space_widget.dart';
 import 'package:flutter_project_nutrition/widgets/training/training_main_title_widget.dart';
@@ -67,6 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(body: Center(child: DietScreen()));
+    return Scaffold(
+    // Coloque sua tela diretamente no body.
+    // Remova o Center e o Column que estavam aqui.
+    body: TrainingScreen(),
+  );
   }
 }
