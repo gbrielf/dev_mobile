@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_nutrition/widgets/diet_main_title_widget.dart';
-import 'package:flutter_project_nutrition/widgets/header_widget.dart';
-import 'package:flutter_project_nutrition/widgets/snack_cards_space_widget.dart';
+import 'package:flutter_project_nutrition/widgets/common/main_title_widget.dart';
+import 'package:flutter_project_nutrition/widgets/common/header_widget.dart';
+import 'package:flutter_project_nutrition/widgets/diet/snack_cards_space_widget.dart';
 
 class DietScreen extends StatelessWidget {
   const DietScreen({super.key});

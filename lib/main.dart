@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_nutrition/screens/diet_screen.dart';
-import 'package:flutter_project_nutrition/widgets/header_widget.dart';
-import 'package:flutter_project_nutrition/widgets/logo_widget.dart';
-import 'package:flutter_project_nutrition/widgets/theme_button_widget.dart';
+import 'package:flutter_project_nutrition/widgets/common/header_widget.dart';
+import 'package:flutter_project_nutrition/widgets/common/logo_widget.dart';
+import 'package:flutter_project_nutrition/widgets/common/theme_button_widget.dart';
 import 'widgets/snack_card_widget.dart';
 
 void main() {
