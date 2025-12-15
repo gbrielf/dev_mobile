@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/common/main_title_widget.dart';
 import '../widgets/common/header_widget.dart';
 import '../widgets/diet/snack_cards_space_widget.dart';
 
@@ -17,13 +16,18 @@ class DietScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 8),
-              HeaderWidget(),
+              const HeaderWidget(),
               const SizedBox(height: 15),
-
-              MainTitleWidget(),
+              const Text(
+                'Dieta',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 36,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
               const SizedBox(height: 30),
-
-              Expanded(child: SnackCardsSpaceWidget()),
+              const Expanded(child: SnackCardsSpaceWidget()),
             ],
           ),
         ),

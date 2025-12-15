@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_nutrition/screens/login_screen.dart';
+import 'package:flutter_project_nutrition/screens/splash_screen.dart';
 import 'package:flutter_project_nutrition/screens/training_screen.dart';
-import 'package:flutter_project_nutrition/widgets/training/exercise_card_widget.dart';
-import 'package:flutter_project_nutrition/widgets/training/training_cards_space_widget.dart';
-import 'package:flutter_project_nutrition/widgets/training/training_main_title_widget.dart';
+import 'package:flutter_project_nutrition/widgets/auth/login_card_widget.dart';
+import 'package:flutter_project_nutrition/widgets/common/app_logo_auth_widget.dart';
+import 'package:flutter_project_nutrition/widgets/common/logo_widget.dart';
+import 'screens/diet_screen.dart';
+// import 'screens/training_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,9 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-    // Coloque sua tela diretamente no body.
-    // Remova o Center e o Column que estavam aqui.
-    body: TrainingScreen(),
-  );
+      body: const SplashScreen(),
+    );
   }
 }

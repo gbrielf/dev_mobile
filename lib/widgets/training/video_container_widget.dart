@@ -10,7 +10,7 @@ class VideoContainerWidget extends StatelessWidget {
       width: 60,
       color: const Color(0xFFD9D9D9),
       child: const Center(
-        child: Icon(Icons.play_circle_fill, size: 32, color: Colors.black45),
+        child: Icon(Icons.play_circle_fill, size: 48, color: Colors.black45),
       ),
     );
   }
