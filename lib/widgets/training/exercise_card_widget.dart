@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../common/button_expand_details_widget.dart';
-import 'video_container_widget.dart';
 
 class ExerciseCardWidget extends StatelessWidget {
   final String title;

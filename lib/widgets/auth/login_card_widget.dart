@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Import necessário
+import 'package:go_router/go_router.dart';
 import 'package:flutter_project_nutrition/widgets/common/app_logo_auth_widget.dart';
 import 'package:flutter_project_nutrition/widgets/common/custom_button_widget.dart';
+import '../providers/auth_provider.dart'; // Import do seu provider
 import 'password_field_widget.dart';
 import 'remember_me_checkbox_widget.dart';
 
-class LoginCardWidget extends StatefulWidget {
+// 1. Alterado para ConsumerStatefulWidget para acessar o ref
+class LoginCardWidget extends ConsumerStatefulWidget {
   const LoginCardWidget({super.key});
 
   @override
-  State<LoginCardWidget> createState() => _LoginCardWidgetState();
+  ConsumerState<LoginCardWidget> createState() => _LoginCardWidgetState();
 }
 
-class _LoginCardWidgetState extends State<LoginCardWidget> {
+class _LoginCardWidgetState extends ConsumerState<LoginCardWidget> {
   bool _rememberMe = false;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -23,8 +27,38 @@ class _LoginCardWidgetState extends State<LoginCardWidget> {
     super.dispose();
   }
 
+  // Lógica de login separada para limpeza
+  Future<void> _handleLogin() async {
+    final email = _usernameController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Preencha todos os campos')));
+      return;
+    }
+
+    // Chama o método de login do provider
+    await ref.read(authStateProvider.notifier).signIn(email, password);
+
+    // Verifica o resultado (se for verdadeiro, navega)
+    final authState = ref.read(authStateProvider);
+    if (authState.value == true) {
+      context.go('/home');
+    } else if (authState.hasError || authState.value == false) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Usuário ou senha inválidos')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // 2. Escuta o estado para saber se está carregando
+    final authStatus = ref.watch(authStateProvider);
+    final isLoading = authStatus.isLoading;
+
     return Center(
       child: Container(
         width: 300,
@@ -36,11 +70,9 @@ class _LoginCardWidgetState extends State<LoginCardWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Logo
-            AppLogoAuthWidget(),
+            const AppLogoAuthWidget(),
             const SizedBox(height: 16),
 
-            // Título
             const Text(
               'Login',
               style: TextStyle(
@@ -51,9 +83,9 @@ class _LoginCardWidgetState extends State<LoginCardWidget> {
             ),
             const SizedBox(height: 24),
 
-            // Campo Usuário
             TextField(
               controller: _usernameController,
+              enabled: !isLoading, // Desabilita enquanto carrega
               decoration: InputDecoration(
                 labelText: 'Usuário',
                 prefixIcon: const Icon(Icons.person, color: Colors.black),
@@ -67,27 +99,31 @@ class _LoginCardWidgetState extends State<LoginCardWidget> {
             ),
             const SizedBox(height: 16),
 
-            // Campo Senha
-            PasswordFieldWidget(controller: _passwordController),
+            PasswordFieldWidget(
+              controller: _passwordController,
+              // Certifique-se que o seu PasswordFieldWidget aceite a prop enabled se necessário
+            ),
             const SizedBox(height: 16),
 
-            // Lembre-me
             RememberMeCheckboxWidget(
               value: _rememberMe,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value ?? false;
-                });
-              },
+              onChanged: isLoading
+                  ? null
+                  : (value) {
+                      setState(() {
+                        _rememberMe = value ?? false;
+                      });
+                    },
             ),
 
-            // Esqueceu a senha
             Align(
               alignment: Alignment.center,
               child: TextButton(
-                onPressed: () {
-                  // TODO: Implementar recuperação de senha
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        // TODO: Implementar recuperação de senha
+                      },
                 child: const Text(
                   'Esqueceu a senha?',
                   style: TextStyle(color: Colors.blue, fontSize: 14),
@@ -96,13 +132,10 @@ class _LoginCardWidgetState extends State<LoginCardWidget> {
             ),
             const SizedBox(height: 16),
 
-            // Botão Login
-            CustomButtonWidget(
-              text: 'LOGIN',
-              onPressed: () {
-                // TODO: Implementar lógica de login
-              },
-            ),
+            // 3. Botão adaptado para mostrar loading
+            isLoading
+                ? const CircularProgressIndicator()
+                : CustomButtonWidget(text: 'LOGIN', onPressed: _handleLogin),
           ],
         ),
       ),

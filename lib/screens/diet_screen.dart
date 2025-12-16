@@ -3,7 +3,9 @@ import '../widgets/common/header_widget.dart';
 import '../widgets/diet/snack_cards_space_widget.dart';
 
 class DietScreen extends StatelessWidget {
-  const DietScreen({super.key});
+  final String usuario;
+  
+  const DietScreen({super.key, required this.usuario});
 
   @override
   Widget build(BuildContext context) {

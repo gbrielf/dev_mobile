@@ -4,7 +4,8 @@ import '../widgets/training/training_main_title_widget.dart';
 import '../widgets/training/training_cards_space_widget.dart';
 
 class TrainingScreen extends StatelessWidget {
-  const TrainingScreen({super.key});
+  final String usuario;
+  const TrainingScreen({super.key, required this.usuario});
 
   @override
   Widget build(BuildContext context) {

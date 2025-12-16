@@ -1,14 +1,19 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Adicionado
+import 'package:go_router/go_router.dart';
 import 'package:flutter_project_nutrition/widgets/common/logo_widget.dart';
+import '../../auth/data/auth_repository.dart'; // Importe seu repositório aqui
 
-class SplashScreen extends StatefulWidget {
+// 1. Alterado para ConsumerStatefulWidget
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
@@ -16,6 +21,9 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+
+    // 2. Chamamos a lógica de verificação de autenticação
+    _checkAuthentication();
 
     _controller = AnimationController(
       duration: const Duration(milliseconds: 6000),
@@ -40,6 +48,28 @@ class _SplashScreenState extends State<SplashScreen>
     ]).animate(_controller);
 
     _controller.repeat();
+  }
+
+  // 3. Nova lógica de navegação inteligente
+  Future<void> _checkAuthentication() async {
+    // Mantemos um delay para garantir que a animação apareça (ajuste conforme desejar)
+    await Future.delayed(const Duration(seconds: 7));
+
+    if (!mounted) return;
+
+    // Lemos o token do storage através do repositório
+    final authRepo = ref.read(authRepositoryProvider);
+    final token = await authRepo.getToken();
+
+    if (mounted) {
+      if (token != null && token.isNotEmpty) {
+        // Se houver token, pula o login e vai para a Home
+        context.go('/home');
+      } else {
+        // Se não houver, segue o fluxo normal para o Login
+        context.go('/login');
+      }
+    }
   }
 
   @override

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_nutrition/screens/login_screen.dart';
-import 'package:flutter_project_nutrition/screens/splash_screen.dart';
-import 'package:flutter_project_nutrition/screens/training_screen.dart';
-import 'package:flutter_project_nutrition/widgets/auth/login_card_widget.dart';
-import 'package:flutter_project_nutrition/widgets/common/app_logo_auth_widget.dart';
-import 'package:flutter_project_nutrition/widgets/common/logo_widget.dart';
-import 'screens/diet_screen.dart';
-// import 'screens/training_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_project_nutrition/core/router/router.dart'; // importa o GoRouter
 
 void main() {
-  runApp(const MyApp());
+  // O ProviderScope deve "abraçar" o seu app para o estado (Riverpod) funcionar
+  runApp(
+    const ProviderScope(
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,15 +16,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        scaffoldBackgroundColor: const Color(
-          0xFF2D2D2D,
-        ), // Cor global do background
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return MaterialApp.router(
+      routerConfig: _router, // Configuração do roteador com GoRouter
+      title: 'Achieve App',
+      debugShowCheckedModeBanner: false,
+      theme: appTheme,
     );
   }
 }
