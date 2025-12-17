@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Import necessário
 import 'package:go_router/go_router.dart';
 import 'package:flutter_project_nutrition/widgets/common/app_logo_auth_widget.dart';
 import 'package:flutter_project_nutrition/widgets/common/custom_button_widget.dart';
-import '../providers/auth_provider.dart'; // Import do seu provider
+import 'package:flutter_project_nutrition/features/auth/presentation/providers/auth_provider.dart';
 import 'password_field_widget.dart';
 import 'remember_me_checkbox_widget.dart';
 
@@ -39,17 +39,30 @@ class _LoginCardWidgetState extends ConsumerState<LoginCardWidget> {
       return;
     }
 
-    // Chama o método de login do provider
-    await ref.read(authStateProvider.notifier).signIn(email, password);
+    try {
+      // Chama o método de login do provider
+      await ref.read(authStateProvider.notifier).signIn(email, password);
 
-    // Verifica o resultado (se for verdadeiro, navega)
-    final authState = ref.read(authStateProvider);
-    if (authState.value == true) {
-      context.go('/home');
-    } else if (authState.hasError || authState.value == false) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Usuário ou senha inválidos')),
-      );
+      // Verifica o resultado (se tiver usuário, navega)
+      final authState = ref.read(authStateProvider);
+      if (authState.value != null) {
+        // Usuário autenticado com sucesso
+        if (mounted) {
+          context.go('/dashboard');
+        }
+      } else if (authState.hasError) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Erro: ${authState.error}')));
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao fazer login: $e')));
+      }
     }
   }
 
@@ -107,13 +120,13 @@ class _LoginCardWidgetState extends ConsumerState<LoginCardWidget> {
 
             RememberMeCheckboxWidget(
               value: _rememberMe,
-              onChanged: isLoading
-                  ? null
-                  : (value) {
-                      setState(() {
-                        _rememberMe = value ?? false;
-                      });
-                    },
+              onChanged: (value) {
+                if (!isLoading) {
+                  setState(() {
+                    _rememberMe = value ?? false;
+                  });
+                }
+              },
             ),
 
             Align(

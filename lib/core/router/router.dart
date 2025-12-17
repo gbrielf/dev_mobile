@@ -1,26 +1,28 @@
 // arquivo de rotas
-import 'package:flutter/material.dart';
-import 'package:flutter_project_nutrition/screens/diet_screen.dart';
 import 'package:go_router/go_router.dart';
-import '/screens/login_screen.dart';
-import '/screens/diet_screen.dart';
-import '/screens/training_screen.dart';
-import '/screens/splash_screen.dart';
+// Use sempre o caminho completo do pacote:
+import 'package:flutter_project_nutrition/screens/login_screen.dart';
+import 'package:flutter_project_nutrition/screens/diet_screen.dart';
+import 'package:flutter_project_nutrition/screens/training_screen.dart';
+import 'package:flutter_project_nutrition/screens/splash_screen.dart';
+import 'package:flutter_project_nutrition/screens/dashboard_screen.dart';
 
-final GoRouter _router = GoRouter(
+// configura as rotas principais do app
+final GoRouter router = GoRouter(
   initialLocation: '/splash',
   redirect: (constext, state) {
     // Lógica de redirecionamento pode ser adicionada aqui
-    final isLoggingIn = state.matchedLocation == '/login';
-    final isSplash = state.matchedLocation == '/splash'; // Nenhum redirecionamento por padrão
+    // final isLoggingIn = state.matchedLocation == '/login';
+    // final isSplash = state.matchedLocation == '/splash'; // Nenhum redirecionamento por padrão
 
-    final bool loggedIn = checkUserLoginStatus();
-    if (!loggedIn && !isLoggingIn && !isSplash){
-      return '/login';
-    }
+    // final bool loggedIn = checkUserLoginStatus();
+    // if (!loggedIn && !isLoggingIn && !isSplash){
+    //   return '/login';
+    // }
     return null;
   },
   routes: [
+    // rota splash
     GoRoute(
       path: '/splash',
       name: 'splash',
@@ -28,28 +30,37 @@ final GoRouter _router = GoRouter(
         return const SplashScreen();
       },
     ),
+    // rota login
     GoRoute(
       path: '/login',
       name: 'login',
       builder: (context, state) {
-      return const LoginScreen();
+        return const LoginScreen();
       },
     ),
+    // rota dashboard
     GoRoute(
-      path: '/dieta/:usuario',
-      builder: (context, state){
-        final usuario = state.pathParameters['usuario']!;
-        return DietScreen(usuario: usuario);
+      path: '/dashboard',
+      name: 'dashboard',
+      builder: (context, state) {
+        return const DashboardScreen();
       },
     ),
+    // rota diet
     GoRoute(
-      path: '/treino/:usuario',
-      builder: (context, state){
-        final usuario = state.pathParameters['usuario']!;
-        return TrainingScreen(usuario: usuario);
+      path: '/diet',
+      name: 'diet',
+      builder: (context, state) {
+        return const DietScreen();
       },
-    )
-
-
+    ),
+    // rota training
+    GoRoute(
+      path: '/training',
+      name: 'training',
+      builder: (context, state) {
+        return const TrainingScreen();
+      },
+    ),
   ],
 );

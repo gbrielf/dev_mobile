@@ -1,22 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/auth_repository.dart';
+import '../../domain/entities/user.dart';
 
-final authStateProvider = StateNotifierProvider<AuthNotifier, AsyncValue<bool?>>((ref){
-  return AuthNotifier(ref.watch(authRepositoryProvider));
-});
+// Provider do estado de autenticação com dados do usuário
+final authStateProvider =
+    StateNotifierProvider<AuthNotifier, AsyncValue<User?>>((ref) {
+      final repository = ref.watch(authRepositoryProvider);
+      return AuthNotifier(repository);
+    });
 
-class AuthNotifier extends StateNotifier<AsyncValue<bool?>> {
+// Notifier que gerencia o estado de autenticação
+class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
   final AuthRepository _repository;
 
   AuthNotifier(this._repository) : super(const AsyncValue.data(null));
 
   Future<void> signIn(String email, String password) async {
     state = const AsyncValue.loading();
+
     try {
-      final sucess = await _repository.login(email, password);
-      state = AsyncValue.data(sucess);
+      final user = await _repository.login(email, password);
+      state = AsyncValue.data(user);
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }
+  }
+
+  void signOut() {
+    state = const AsyncValue.data(null);
   }
 }
