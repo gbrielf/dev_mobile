@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:achieve_project/features/auth/data/repositories/auth_repository.dart'; // ajuste se necessário
 import 'package:achieve_project/core/network/dio_client.dart'; // Ajuste para o seu caminho real
+
 class Meal {
   final int id;
   final String name;

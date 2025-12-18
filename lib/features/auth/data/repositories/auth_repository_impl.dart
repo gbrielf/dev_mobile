@@ -1,8 +1,11 @@
+// auth_repository_impl.dart contém a classe AuthRepositoryImpl E o final authRepositoryProvider.
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../data/repositories/auth_repository.dart'; // A Interface
 import '../models/user_model.dart'; // O Model com fromJson
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Para o Provider
+import 'package:achieve_project/core/network/dio_client.dart'; // ONDE ESTÁ O dioProvider
 
 class AuthRepositoryImpl implements IAuthRepository {
   final Dio _dio;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Adicionado
 import 'package:go_router/go_router.dart';
 import 'package:achieve_project/core/widgets/logo_widget.dart';
-import 'package:achieve_project/features/auth/data/repositories/auth_repository.dart';
+import 'package:achieve_project/features/auth/data/repositories/auth_repository_impl.dart';
 
 // 1. Alterado para ConsumerStatefulWidget
 class SplashScreen extends ConsumerStatefulWidget {

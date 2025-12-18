@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import '../models/nutrition_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Para o Provider
+import 'package:achieve_project/core/network/dio_client.dart'; // ONDE ESTÁ O dioProvider
 
 class NutritionRepository {
   final Dio _dio;
