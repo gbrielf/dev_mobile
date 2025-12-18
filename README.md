@@ -1,19 +1,13 @@
 # flutter_project_nutrition
 
-A new Flutter project.
+## Futura arquitetura a ser aplicada:
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-stless
-stful
+lib/
+├── core/                 # Coisas globais (Router, Temas, Erros, DioProvider)
+├── features/             # Cada funcionalidade do app é uma "Feature"
+│   ├── auth/             # Autenticação (Login, Cadastro)
+│   │   ├── data/         # CAMADA DE DADOS: Repositories e Models (JSON)
+│   │   ├── domain/       # CAMADA DE NEGÓCIO: Entidades e Casos de Uso
+│   │   └── presentation/ # CAMADA VISUAL: Widgets, Screens e Providers (Riverpod)
+│   ├── nutrition/        # Outra feature independente
+│   └── training/         # Outra feature independente

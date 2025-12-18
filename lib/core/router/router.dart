@@ -1,36 +1,53 @@
 // arquivo de rotas
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Use sempre o caminho completo do pacote:
 import 'package:flutter_project_nutrition/screens/login_screen.dart';
 import 'package:flutter_project_nutrition/screens/diet_screen.dart';
 import 'package:flutter_project_nutrition/screens/training_screen.dart';
 import 'package:flutter_project_nutrition/screens/splash_screen.dart';
 import 'package:flutter_project_nutrition/screens/dashboard_screen.dart';
+import 'package:flutter_project_nutrition/features/auth/presentation/providers/auth_provider.dart';
 
-// configura as rotas principais do app
-final GoRouter router = GoRouter(
-  initialLocation: '/splash',
-  redirect: (constext, state) {
-    // Lógica de redirecionamento pode ser adicionada aqui
-    // final isLoggingIn = state.matchedLocation == '/login';
-    // final isSplash = state.matchedLocation == '/splash'; // Nenhum redirecionamento por padrão
-
-    // final bool loggedIn = checkUserLoginStatus();
-    // if (!loggedIn && !isLoggingIn && !isSplash){
-    //   return '/login';
-    // }
-    return null;
-  },
-  routes: [
-    // rota splash
-    GoRoute(
-      path: '/splash',
-      name: 'splash',
-      builder: (context, state) {
-        return const SplashScreen();
-      },
-    ),
-    // rota login
+// Provider do GoRouter que tem acesso ao Riverpod
+final routerProvider = Provider<GoRouter>((ref) {
+  final authState = ref.watch(authStateProvider);
+  
+  return GoRouter(
+    initialLocation: '/splash',
+    redirect: (context, state) {
+      final isAuthenticated = authState.value != null;
+      final currentPath = state.matchedLocation;
+      
+      // Se acessar /, redireciona conforme autenticação
+      if (currentPath == '/') {
+        return isAuthenticated ? '/dashboard' : '/login';
+      }
+      
+      // Rotas protegidas (requer autenticação)
+      final protectedRoutes = ['/dashboard', '/diet', '/training'];
+      if (protectedRoutes.contains(currentPath) && !isAuthenticated) {
+        return '/login';
+      }
+      
+      // Se está autenticado e tenta acessar login, vai pro dashboard
+      if (currentPath == '/login' && isAuthenticated) {
+        return '/dashboard';
+      }
+      
+      return null;
+    },
+    routes: [
+      // rota splash
+      GoRoute(
+        path: '/splash',
+        name: 'splash',
+        builder: (context, state) {
+          return const SplashScreen();
+        },
+      ),
+      // rota login
     GoRoute(
       path: '/login',
       name: 'login',
@@ -63,4 +80,5 @@ final GoRouter router = GoRouter(
       },
     ),
   ],
-);
+  );
+});

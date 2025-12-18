@@ -6,7 +6,18 @@ class SnackCardsSpaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView.builder(
+      itemCount: meals.length,
+      itemBuilder: (context, index){
+        final meal = meals[index];
+        return SnackCardWidget(
+          title: meal.name,
+          items: meal.items.join(', '),
+          
+        )
+      }
+    )
+    Column(
       children: [
         Expanded(
           child: Padding(

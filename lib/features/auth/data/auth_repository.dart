@@ -3,8 +3,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/entities/user.dart';
 
-// 1. Definição do Interceptor (O "pedágio" que coloca o token)
+// Definição do Interceptor (O "pedágio" que coloca o token)
 class AuthInterceptor extends Interceptor {
+  // Guarda o token de forma criptografada e persistente 
   final _storage = const FlutterSecureStorage();
 
   @override
@@ -33,12 +34,13 @@ final dioProvider = Provider<Dio>((ref) {
       },
     ),
   );
+  // adiciona o token automaticamente em todas as requições futuras
   dio.interceptors.add(AuthInterceptor());
   dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
   return dio;
 });
 
-// 3. Classe do Repositório
+// Classe do Repositório
 class AuthRepository {
   final Dio _dio;
   final _storage = const FlutterSecureStorage();

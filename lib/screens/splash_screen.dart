@@ -63,8 +63,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (mounted) {
       if (token != null && token.isNotEmpty) {
-        // Se houver token, pula o login e vai para a Home
-        context.go('/home');
+        // Se houver token, pula o login e vai para o Dashboard
+        context.go('/dashboard');
       } else {
         // Se não houver, segue o fluxo normal para o Login
         context.go('/login');

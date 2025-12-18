@@ -4,8 +4,9 @@ import '../common/button_expand_details_widget.dart';
 class SnackCardWidget extends StatelessWidget {
   final String title;
   final String time;
+  final String description;
 
-  const SnackCardWidget({super.key, this.title = 'N/F', this.time = 'N/F'});
+  const SnackCardWidget({super.key, this.title = 'N/F', this.time = 'N/F', this.description = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,16 @@ class SnackCardWidget extends StatelessWidget {
           const ButtonExpandDetailsWidget(),
         ],
       ),
+      if (description.isNotEmpty)...[
+        const SizedBox(height: 8),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            description,
+            style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
+          )
+        )
+      ]
     );
   }
 }
