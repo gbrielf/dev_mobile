@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Import necessário
 import 'package:go_router/go_router.dart';
-import 'package:flutter_project_nutrition/widgets/common/app_logo_auth_widget.dart';
-import 'package:flutter_project_nutrition/widgets/common/custom_button_widget.dart';
-import 'package:flutter_project_nutrition/features/auth/presentation/providers/auth_provider.dart';
+import 'package:achieve_project/core/widgets/app_logo_auth_widget.dart';
+import 'package:achieve_project/core/widgets/custom_button_widget.dart';
+import 'package:achieve_project/features/auth/presentation/providers/auth_provider.dart';
 import 'password_field_widget.dart';
 import 'remember_me_checkbox_widget.dart';
 

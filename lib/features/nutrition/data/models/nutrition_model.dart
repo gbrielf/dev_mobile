@@ -1,7 +1,9 @@
+// lib/features/nutrition/data/models/meal_model.dart
+
 class MealItemModel {
   final String name;
-  final double weight;
-  final double portion;
+  final int weight; // Mudamos para int para bater com seu layout de "150g"
+  final String portion;
 
   MealItemModel({
     required this.name,
@@ -10,27 +12,48 @@ class MealItemModel {
   });
 
   factory MealItemModel.fromJson(Map<String, dynamic> json) {
+    final weightValue = json['weight'];
+
+    // Proteção de tipo: garante que vire int independente de como venha do Django
+    final intWeight = (weightValue is num)
+        ? weightValue.toInt()
+        : int.tryParse('$weightValue') ?? 0;
+
     return MealItemModel(
-      name: json['name'],
-      weight: json['weight'].toDouble(),
-      portion: json['portion'].toDouble(),
+      name: json['name']?.toString() ?? 'Sem nome',
+      weight: intWeight,
+      portion: json['portion']?.toString() ?? '',
     );
   }
 }
 
 class MealModel {
+  final int id;
   final String name;
-  final int schedule; // 1 a 6 conforme seu Django
+  final int schedule;
   final List<MealItemModel> items;
 
-  MealModel({required this.name, required this.schedule, required this.items});
+  MealModel({
+    required this.id,
+    required this.name,
+    required this.schedule,
+    required this.items,
+  });
 
   factory MealModel.fromJson(Map<String, dynamic> json) {
+    // Proteção para a lista de itens: se vier nulo, vira lista vazia
+    final itemsJson = json['items'] as List<dynamic>? ?? [];
+
     return MealModel(
-      name: json['name'],
-      schedule: json['schedule'],
-      items: (json['items'] as List)
-          .map((i) => MealItemModel.fromJson(i))
+      id: (json['id'] is int)
+          ? json['id'] as int
+          : int.tryParse('${json['id']}') ?? 0,
+      name: json['name']?.toString() ?? '',
+      schedule: (json['schedule'] is int)
+          ? json['schedule'] as int
+          : int.tryParse('${json['schedule']}') ?? 0,
+      items: itemsJson
+          .map((i) => MealItemModel.fromJson(i as Map<String, dynamic>))
           .toList(),
     );
   }

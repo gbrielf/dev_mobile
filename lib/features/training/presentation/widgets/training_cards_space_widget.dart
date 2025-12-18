@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../training/exercise_card_widget.dart';
+import 'exercise_card_widget.dart';
 
 class TrainingCardsSpaceWidget extends StatelessWidget {
   const TrainingCardsSpaceWidget({super.key});

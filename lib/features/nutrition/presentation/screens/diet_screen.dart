@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_project_nutrition/features/nutrition/nutrition_provider.dart';
-import '../widgets/common/header_widget.dart';
-import '../widgets/diet/snack_card_widget.dart';
+import 'package:achieve_project/features/nutrition/presentation/providers/nutrition_provider.dart';
+import '../../../../core/widgets/header_widget.dart';
+import '../widgets/snack_card_widget.dart';
 
 class DietScreen extends ConsumerWidget {
   const DietScreen({super.key});
@@ -35,20 +35,13 @@ class DietScreen extends ConsumerWidget {
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
                   error: (err, stack) => Center(child: Text('Error: $err')),
-                  data: (meals) => ListView.builder(
+                  data: (meals) => ListView.separated(
                     itemCount: meals.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
                     itemBuilder: (context, index) {
                       final meal = meals[index];
-                      final String itemsDescription = meal.items
-                          .map(
-                            (item) =>
-                                "${item.name}: ${item.weight ?? item.portion}",
-                          )
-                          .join(", ");
-                      return SnackCardWidget(
-                        title: meal.name,
-                        description: itemsDescription,
-                      );
+                      return SnackCardWidget(meal: meal);
                     },
                   ),
                 ),

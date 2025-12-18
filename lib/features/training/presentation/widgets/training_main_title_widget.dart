@@ -1,6 +1,6 @@
 // TrainingMainTitleWidget.dart
 import 'package:flutter/material.dart';
-import '../common/button_expand_details_widget.dart'; // Importe o ícone AQUI
+import '../../../../core/widgets/button_expand_details_widget.dart'; // Importe o ícone AQUI
 
 class TrainingMainTitleWidget extends StatelessWidget {
   const TrainingMainTitleWidget({super.key});

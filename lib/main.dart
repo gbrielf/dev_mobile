@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_project_nutrition/core/router/router.dart'; // importa o GoRouter
+import 'package:achieve_project/core/router/router.dart'; // importa o GoRouter
 
 void main() {
   // O ProviderScope deve "abraçar" o seu app para o estado (Riverpod) funcionar

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/common/header_widget.dart';
-import '../widgets/training/training_main_title_widget.dart';
-import '../widgets/training/training_cards_space_widget.dart';
+import '../../../../core/widgets/header_widget.dart';
+import '../widgets/training_main_title_widget.dart';
+import '../widgets/training_cards_space_widget.dart';
 
 class TrainingScreen extends StatelessWidget {
   const TrainingScreen({super.key});

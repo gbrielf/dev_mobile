@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../common/button_expand_details_widget.dart';
+import '../../../../core/widgets/button_expand_details_widget.dart';
 
 class ExerciseCardWidget extends StatelessWidget {
   final String title;
