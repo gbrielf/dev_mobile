@@ -1,5 +1,3 @@
-// lib/features/nutrition/data/models/meal_model.dart
-
 class MealItemModel {
   final String name;
   final int weight; // Mudamos para int para bater com seu layout de "150g"

@@ -1,4 +1,4 @@
-String getScheduleLabel(int schedule) {
+String getNutritionScheduleLabel(int schedule) {
   const labels = {
     1: '08:00', // Café da manhã
     2: '10:30', // Lanche da manhã

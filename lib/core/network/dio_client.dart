@@ -24,9 +24,9 @@ class AuthInterceptor extends Interceptor {
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'http://192.168.0.2:8000/achieve-api',
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
+      baseUrl: 'http://192.168.0.6:8000/achieve-api',
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
     ),
   );
   dio.interceptors.add(AuthInterceptor());
