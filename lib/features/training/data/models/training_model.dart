@@ -1,4 +1,32 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
+class SessionDay {
+  final int session;
+  final List<int> dayOfWeek;
+
+  static const Map<int, String> WEEK_DAYS = {
+    1: 'Domingo',
+    2: 'Segunda-feira',
+    3: 'Terça-feira',
+    4: 'Quarta-feira',
+    5: 'Quinta-feira',
+    6: 'Sexta-feira',
+    7: 'Sábado',
+  };
+
+  SessionDay({required this.session, required this.dayOfWeek});
+
+  factory SessionDay.fromJson(Map<String, dynamic> json) {
+    final rawList = json['day_of_week'] as List<dynamic>? ?? <dynamic>[];
+    final parsed = rawList
+        .map((e) => e is int ? e : int.tryParse('$e') ?? 0)
+        .toList();
+    return SessionDay(session: json['session'], dayOfWeek: parsed);
+  }
+
+  List<String> getDayLabels() {
+    return dayOfWeek.map((day) => WEEK_DAYS[day] ?? 'N/F').toList();
+  }
+}
+
 
 class TrainingExerciseModel {
   final String name;
@@ -23,13 +51,13 @@ class TrainingExerciseModel {
 
   factory TrainingExerciseModel.fromJson(Map<String, dynamic> json) {
     return TrainingExerciseModel(
-      name: json['name'],
-      muscleGroup: json['muscle_group'],
-      muscleLoad: json['muscle_load'].toDouble(),
-      series: json['series'],
-      reps: json['repetitions'],
-      restTime: json['rest_time'],
-      urlVideo: json['url_video'],
+      name: json['name'] ?? '',
+      muscleGroup: json['muscle_group'] ?? '',
+      muscleLoad: (json['muscle_load'] ?? 0).toDouble(),
+      series: json['series'] ?? 0,
+      reps: json['repetitions'] ?? 0,
+      restTime: json['rest_time'] ?? 0,
+      urlVideo: json['video'] ?? '',
       session: json['session'],
     );
   }
@@ -38,28 +66,23 @@ class TrainingExerciseModel {
 class TrainingSessionModel {
   final int id;
   final String name;
-  final int training;
-  final DateTime date;
-  final int duration;
-  final Bool isActive;
-
+  final List<TrainingExerciseModel> exercises;
+  final List<int> days;
+  
   TrainingSessionModel({
     required this.id,
     required this.name,
-    required this.training,
-    required this.date,
-    required this.duration,
-    required this.isActive,
+    required this.exercises,
+    required this.days,
   });
 
   factory TrainingSessionModel.fromJson(Map<String, dynamic> json) {
     return TrainingSessionModel(
       id: json['id'],
       name: json['name'],
-      training: json['training'],
-      date: DateTime.parse(json['date']),
-      duration: json['duration'],
-      isActive: json['is_active'],
+      exercises: (json['exercises'] as List? ?? []).map((e) => TrainingExerciseModel.fromJson(e)).toList(),
+      days: (json['days'] as List? ?? []).map((d) => d['day'] as int).toList(),
+      
     );
   }
 }
@@ -91,38 +114,5 @@ class TrainingModel{
           ? json['contract'] as int
           : int.tryParse('${json['contract']}') ?? 0,
     );
-  }
-}
-
-class SessionDay{
-  final int session;
-  final List<int> dayOfWeek;
-  
-  static const Map<int, String> WEEK_DAYS = {
-    1: 'Domingo',
-    2: 'Segunda-feira',
-    3: 'Terça-feira',
-    4: 'Quarta-feira',
-    5: 'Quinta-feira',
-    6: 'Sexta-feira',
-    7: 'Sábado',
-  };
-
-  SessionDay({
-    required this.session,
-    required this.dayOfWeek,
-  });
-
-  factory SessionDay.fromJson(Map<String, dynamic> json) {
-    final rawList = json['day_of_week'] as List<dynamic>? ?? <dynamic>[];
-    final parsed = rawList.map((e) => e is int ? e : int.tryParse('$e') ?? 0).toList();
-    return SessionDay(
-      session: json['session'],
-      dayOfWeek: parsed,
-    );
-  }
-
-  List<String> getDayLabels(){
-    return dayOfWeek.map((day) => WEEK_DAYS[day] ?? 'N/F').toList();
   }
 }
