@@ -27,7 +27,6 @@ class SessionDay {
   }
 }
 
-
 class TrainingExerciseModel {
   final String name;
   final String muscleGroup;
@@ -51,16 +50,30 @@ class TrainingExerciseModel {
 
   factory TrainingExerciseModel.fromJson(Map<String, dynamic> json) {
     return TrainingExerciseModel(
-      name: json['name'] ?? '',
-      muscleGroup: json['muscle_group'] ?? '',
-      muscleLoad: (json['muscle_load'] ?? 0).toDouble(),
-      series: json['series'] ?? 0,
-      reps: json['repetitions'] ?? 0,
-      restTime: json['rest_time'] ?? 0,
-      urlVideo: json['video'] ?? '',
-      session: json['session'],
+      name: json['name']?.toString() ?? '',
+      muscleGroup: json['muscle_group']?.toString() ?? '',
+      muscleLoad: (json['muscle_load'] ?? 0.0) is double
+          ? json['muscle_load']
+          : (json['muscle_load'] ?? 0.0).toDouble(),
+      series: json['series'] is int
+          ? json['series']
+          : int.tryParse('${json['series']}') ?? 0,
+      reps: json['repetitions'] is int
+          ? json['repetitions']
+          : int.tryParse('${json['repetitions']}') ?? 0,
+      restTime: json['rest_time'] is int
+          ? json['rest_time']
+          : int.tryParse('${json['rest_time']}') ?? 0,
+      urlVideo: json['video']?.toString() ?? '',
+      session: json['session'] is int
+          ? json['session']
+          : int.tryParse('${json['session']}') ?? 0,
     );
   }
+
+  // Compatibility getters: some widgets expect `sets` and `weight`
+  int get sets => series;
+  double get weight => muscleLoad;
 }
 
 class TrainingSessionModel {
@@ -68,7 +81,7 @@ class TrainingSessionModel {
   final String name;
   final List<TrainingExerciseModel> exercises;
   final List<int> days;
-  
+
   TrainingSessionModel({
     required this.id,
     required this.name,
@@ -78,16 +91,29 @@ class TrainingSessionModel {
 
   factory TrainingSessionModel.fromJson(Map<String, dynamic> json) {
     return TrainingSessionModel(
-      id: json['id'],
-      name: json['name'],
-      exercises: (json['exercises'] as List? ?? []).map((e) => TrainingExerciseModel.fromJson(e)).toList(),
-      days: (json['days'] as List? ?? []).map((d) => d['day'] as int).toList(),
-      
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 'Treino sem nome',
+      exercises: (json['exercises'] as List? ?? [])
+          .map((e) => TrainingExerciseModel.fromJson(e))
+          .toList(),
+      days: (json['days'] as List? ?? [])
+          .map((d) {
+            // Se d é um Map com 'day', usa d['day']
+            if (d is Map<String, dynamic> && d.containsKey('day')) {
+              return d['day'] as int;
+            }
+            // Se d já é um int, usa direto
+            if (d is int) return d;
+            // Fallback
+            return 0;
+          })
+          .where((day) => day != 0) // Remove dias inválidos
+          .toList(),
     );
   }
 }
 
-class TrainingModel{
+class TrainingModel {
   final String objective;
   final DateTime dateStart;
   final bool isActive;

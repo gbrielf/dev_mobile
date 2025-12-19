@@ -7,17 +7,20 @@ class TrainingRepository {
   final Dio _dio;
   TrainingRepository(this._dio);
 
-  Future<List<TrainingSessionModel>> getTrainingSessions() async{
-    try{
+  Future<List<TrainingSessionModel>> getTrainingSessions() async {
+    try {
       final response = await _dio.get('/training-sessions/');
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         final List data = response.data;
         // Aqui ele vai usar o fromJson que conecta Sessão + Exercícios
         return data.map((m) => TrainingSessionModel.fromJson(m)).toList();
       }
       throw Exception('Falha ao carregar os exercícios');
-    }catch(e){
-      throw Exception('Erro de conexão com o servidor');
+    } catch (e, stackTrace) {
+      // Log do erro real para debug
+      print('Erro no getTrainingSessions: $e');
+      print('StackTrace: $stackTrace');
+      rethrow; // Propaga o erro original ao invés de esconder
     }
   }
 }
