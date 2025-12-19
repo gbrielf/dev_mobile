@@ -14,7 +14,7 @@ class TrainingCardWidget extends StatefulWidget {
 
 class _TrainingCardWidgetState extends State<TrainingCardWidget> {
   bool isExpanded = false;
-  
+
   Future<void> _openVideo() async {
     final url = widget.exercise.urlVideo;
     if (url.isNotEmpty) {
@@ -34,9 +34,7 @@ class _TrainingCardWidgetState extends State<TrainingCardWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: isExpanded ? null : 100,
-      constraints: BoxConstraints(
-        minHeight: 100,
-      ),
+      constraints: BoxConstraints(minHeight: 100),
       decoration: BoxDecoration(
         color: const Color(0xFF2D2D2D),
         border: Border.all(
@@ -71,15 +69,20 @@ class _TrainingCardWidgetState extends State<TrainingCardWidget> {
                 ),
               ),
             ),
-            
+
             // Informações do exercício
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: isExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
+                  mainAxisAlignment: isExpanded
+                      ? MainAxisAlignment.start
+                      : MainAxisAlignment.center,
                   children: [
                     // Linha principal: título, tempo e botão
                     Row(
@@ -113,11 +116,13 @@ class _TrainingCardWidgetState extends State<TrainingCardWidget> {
                           ),
                         GestureDetector(
                           onTap: () => setState(() => isExpanded = !isExpanded),
-                          child: ButtonExpandDetailsWidget(isExpanded: isExpanded),
+                          child: ButtonExpandDetailsWidget(
+                            isExpanded: isExpanded,
+                          ),
                         ),
                       ],
                     ),
-                    
+
                     // Detalhes expandidos
                     if (isExpanded)
                       Padding(
@@ -128,16 +133,25 @@ class _TrainingCardWidgetState extends State<TrainingCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _buildExpandedRow("Séries:", "${widget.exercise.sets}×${widget.exercise.reps}"),
+                                  _buildExpandedRow(
+                                    "Séries:",
+                                    "${widget.exercise.sets}×${widget.exercise.reps}",
+                                  ),
                                   const SizedBox(height: 4),
-                                  _buildExpandedRow("Carga:", "${widget.exercise.weight}kg"),
+                                  _buildExpandedRow(
+                                    "Carga:",
+                                    "${widget.exercise.weight}kg",
+                                  ),
                                 ],
                               ),
                             ),
                             const SizedBox(width: 8),
                             // Botão de tempo quando expandido
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
                                 color: const Color(0xFF3D3D3D),
                                 borderRadius: BorderRadius.circular(20),
