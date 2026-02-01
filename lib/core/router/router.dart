@@ -1,7 +1,6 @@
 // arquivo de rotas
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Use sempre o caminho completo do pacote:
 import 'package:achieve_project/features/auth/presentation/screens/login_screen.dart';
 import 'package:achieve_project/features/nutrition/presentation/screens/diet_screen.dart';
 import 'package:achieve_project/features/training/presentation/screens/training_screen.dart';
